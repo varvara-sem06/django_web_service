@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Все рассылки</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <p>
+            {{ message }}
+        </p>
+    {% endfor %}
+{% endif %}
+
+<table border="1" cellpadding="8">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Владелец</th>
+            <th>Тема</th>
+            <th>Начало</th>
+            <th>Окончание</th>
+            <th>Статус</th>
+            <th>Отключена</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for mailing in mailings %}
+
+        <tr>
+
+            <td>
+                {{ mailing.pk }}
+            </td>
+
+            <td>
+                {{ mailing.owner.username }}
+            </td>
+
+            <td>
+                {{ mailing.message.subject }}
+            </td>
+
+            <td>
+                {{ mailing.start_time }}
+            </td>
+
+            <td>
+                {{ mailing.end_time }}
+            </td>
+
+            <td>
+                {{ mailing.status }}
+            </td>
+
+            <td>
+
+                {% if mailing.is_disabled %}
+                    Отключена
+                {% else %}
+                    Активна
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                {% if mailing.is_disabled %}
+
+                    Отключена
+
+                {% else %}
+
+                    <form
+                        method="post"
+                        action="{% url 'newsletter:disable_mailing' mailing.pk %}"
+                    >
+
+                        {% csrf_token %}
+
+                        <button type="submit">
+                            Отключить
+                        </button>
+
+                    </form>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="8">
+                Рассылок пока нет.
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

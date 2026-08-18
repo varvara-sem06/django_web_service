@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Все получатели
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">
+    Все получатели
+</h1>
+
+<div class="card">
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Владелец</th>
+                    <th>ФИО</th>
+                    <th>Email</th>
+                    <th>Комментарий</th>
+                    <th>Дата создания</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for recipient in recipients %}
+
+                    <tr>
+
+                        <td>
+                            {{ recipient.pk }}
+                        </td>
+
+                        <td>
+                            {{ recipient.owner.username }}
+                        </td>
+
+                        <td>
+                            {{ recipient.full_name }}
+                        </td>
+
+                        <td>
+                            {{ recipient.email }}
+                        </td>
+
+                        <td>
+                            {{ recipient.comment|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ recipient.created_at|date:"d.m.Y H:i" }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+                        <td colspan="6">
+                            Получателей пока нет.
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

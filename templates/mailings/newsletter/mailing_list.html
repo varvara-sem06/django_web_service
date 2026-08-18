@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Рассылки</h2>
+
+<a href="{% url 'newsletter:create' %}">
+
+Создать рассылку
+
+</a>
+
+<hr>
+
+{% for mailing in mailings %}
+
+<p>
+
+{{ mailing.message.subject }}
+
+|
+
+{{ mailing.status }}
+
+|
+
+<a href="{% url 'newsletter:detail' mailing.pk %}">
+Открыть
+</a>
+
+|
+
+<a href="{% url 'newsletter:update' mailing.pk %}">
+Редактировать
+</a>
+
+|
+
+<a href="{% url 'newsletter:delete' mailing.pk %}">
+Удалить
+</a>
+
+</p>
+
+{% empty %}
+
+<p>Рассылок нет.</p>
+
+{% endfor %}
+
+{% endblock %}
