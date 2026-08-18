@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Главная
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">
+    Главная
+</h1>
+
+<div class="cards">
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Всего рассылок
+        </div>
+
+        <div class="stat-value">
+            {{ total_mailings }}
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Активных рассылок
+        </div>
+
+        <div class="stat-value">
+            {{ active_mailings }}
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Получателей
+        </div>
+
+        <div class="stat-value">
+            {{ total_recipients }}
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h2>
+        Добро пожаловать!
+    </h2>
+
+    <p>
+        Здесь вы можете управлять получателями,
+        сообщениями и рассылками.
+    </p>
+
+    <div class="actions">
+
+        <a
+            href="{% url 'mailings:list' %}"
+            class="btn"
+        >
+            Получатели
+        </a>
+
+        <a
+            href="{% url 'messages_app:list' %}"
+            class="btn"
+        >
+            Сообщения
+        </a>
+
+        <a
+            href="{% url 'newsletter:list' %}"
+            class="btn"
+        >
+            Рассылки
+        </a>
+
+        <a
+            href="{% url 'newsletter:statistics' %}"
+            class="btn"
+        >
+            Статистика
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,595 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+            Сервис рассылок
+        {% endblock %}
+    </title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f5f6fa;
+            color: #222;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            background: #1f2937;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav a {
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: #e5e7eb;
+            transition: background 0.2s;
+        }
+
+        .nav a:hover {
+            background: #374151;
+            color: white;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+        }
+
+        .username {
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 24px;
+        }
+
+        .page-title {
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .btn {
+            display: inline-block;
+            border: none;
+            border-radius: 6px;
+            padding: 9px 15px;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+
+            transition:
+                background 0.2s,
+                transform 0.1s;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .btn-success {
+            background: #16a34a;
+        }
+
+        .btn-success:hover {
+            background: #15803d;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 22px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.06);
+
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-title {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th,
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+        }
+
+        tr:hover td {
+            background: #fafafa;
+        }
+
+        /* =========================
+           FORMS
+        ========================= */
+
+        form {
+            max-width: 700px;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+
+            background: white;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 2px rgba(37, 99, 235, 0.12);
+        }
+
+        .helptext {
+            display: block;
+            margin-top: 5px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .errorlist {
+            margin: 5px 0 10px;
+            padding: 0;
+
+            list-style: none;
+            color: #dc2626;
+            font-size: 14px;
+        }
+
+        /* =========================
+           MESSAGES
+        ========================= */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .message-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .message-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .message-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .message-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 999px;
+
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .status-created {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .status-started {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-finished {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            margin-top: 50px;
+            padding: 25px;
+
+            background: #1f2937;
+            color: #9ca3af;
+
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav {
+                width: 100%;
+            }
+
+            .user-area {
+                width: 100%;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            th,
+            td {
+                white-space: nowrap;
+            }
+        }
+    </style>
+
+    {% block extra_css %}
+    {% endblock %}
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-container">
+
+        <a
+            href="{% url 'home' %}"
+            class="logo"
+        >
+            Сервис рассылок
+        </a>
+
+
+        <nav class="nav">
+
+            <a href="{% url 'home' %}">
+                Главная
+            </a>
+
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'mailings:list' %}">
+                    Получатели
+                </a>
+
+                <a href="{% url 'messages_app:list' %}">
+                    Сообщения
+                </a>
+
+                <a href="{% url 'newsletter:list' %}">
+                    Рассылки
+                </a>
+
+                <a href="{% url 'newsletter:statistics' %}">
+                    Статистика
+                </a>
+
+
+                {% if user.is_staff %}
+
+                    <a href="{% url 'users:manager_users' %}">
+                        Пользователи
+                    </a>
+
+                    <a href="{% url 'newsletter:manager_mailings' %}">
+                        Все рассылки
+                    </a>
+
+                    <a href="{% url 'mailings:manager_recipients' %}">
+                        Все получатели
+                    </a>
+
+                {% endif %}
+
+            {% else %}
+
+                <a href="{% url 'users:login' %}">
+                    Войти
+                </a>
+
+                <a href="{% url 'users:register' %}">
+                    Регистрация
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+
+        {% if user.is_authenticated %}
+
+            <div class="user-area">
+
+                <span class="username">
+                    {{ user.email|default:user.username }}
+                </span>
+
+
+                <form
+                    method="post"
+                    action="{% url 'users:logout' %}"
+                    style="margin: 0;"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="btn btn-secondary"
+                    >
+                        Выйти
+                    </button>
+
+                </form>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    {% if messages %}
+
+        <div class="messages">
+
+            {% for message in messages %}
+
+                <div
+                    class="message
+                    {% if message.tags == 'success' %}
+                        message-success
+                    {% elif message.tags == 'error' %}
+                        message-error
+                    {% elif message.tags == 'warning' %}
+                        message-warning
+                    {% else %}
+                        message-info
+                    {% endif %}
+                    "
+                >
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+        Сервис управления рассылками
+    </p>
+
+    <p>
+        Курсовая работа
+    </p>
+
+</footer>
+
+
+{% block extra_js %}
+{% endblock %}
+
+</body>
+</html>

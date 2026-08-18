@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Удаление рассылки</h2>
+
+<form method="post">
+
+{% csrf_token %}
+
+<p>
+
+Удалить рассылку?
+
+</p>
+
+<button type="submit">
+
+Да
+
+</button>
+
+</form>
+
+{% endblock %}

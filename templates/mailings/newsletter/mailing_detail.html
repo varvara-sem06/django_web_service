@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>
+    {{ object.message.subject }}
+</h2>
+
+<p>
+    <strong>Статус:</strong>
+    {{ object.status }}
+</p>
+
+<p>
+    <strong>Начало:</strong>
+    {{ object.start_time }}
+</p>
+
+<p>
+    <strong>Конец:</strong>
+    {{ object.end_time }}
+</p>
+
+<h3>
+    Получатели
+</h3>
+
+<ul>
+    {% for recipient in object.recipients.all %}
+        <li>
+            {{ recipient.full_name }} — {{ recipient.email }}
+        </li>
+    {% empty %}
+        <li>Получателей нет.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<a href="{% url 'newsletter:send' object.pk %}">
+    <button type="button">
+        Запустить рассылку
+    </button>
+</a>
+
+<br><br>
+
+<form
+    method="post"
+    action="{% url 'newsletter:send' object.pk %}"
+>
+
+    {% csrf_token %}
+
+    <button type="submit">
+        Запустить рассылку
+    </button>
+
+</form>
+
+
+<br>
+
+
+<a href="{% url 'newsletter:update' object.pk %}">
+    Редактировать рассылку
+</a>
+
+
+<br>
+
+
+<a href="{% url 'newsletter:list' %}">
+    Вернуться к списку рассылок
+</a>
+
+
+<h3>
+    История отправок
+</h3>
+
+{% for attempt in object.attempts.all %}
+
+    <div>
+
+        <p>
+            <strong>Дата:</strong>
+            {{ attempt.attempt_time }}
+        </p>
+
+        <p>
+            <strong>Статус:</strong>
+            {{ attempt.status }}
+        </p>
+
+        <p>
+            <strong>Ответ сервера:</strong>
+            {{ attempt.server_response }}
+        </p>
+
+        <hr>
+
+    </div>
+
+{% empty %}
+
+    <p>
+        Попыток отправки пока нет.
+    </p>
+
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Статистика
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">
+    Статистика рассылок
+</h1>
+
+
+<div class="cards">
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Всего попыток
+        </div>
+
+        <div class="stat-value">
+            {{ total_attempts }}
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Успешных попыток
+        </div>
+
+        <div class="stat-value">
+            {{ successful_attempts }}
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Неуспешных попыток
+        </div>
+
+        <div class="stat-value">
+            {{ failed_attempts }}
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Отправлено сообщений
+        </div>
+
+        <div class="stat-value">
+            {{ sent_messages }}
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h2>
+        Статистика по рассылкам
+    </h2>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Рассылка</th>
+                    <th>Всего попыток</th>
+                    <th>Успешных</th>
+                    <th>Неуспешных</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for mailing in mailing_statistics %}
+
+                    <tr>
+
+                        <td>
+                            {{ mailing.message.subject }}
+                        </td>
+
+                        <td>
+                            {{ mailing.total_attempts }}
+                        </td>
+
+                        <td>
+                            {{ mailing.successful }}
+                        </td>
+
+                        <td>
+                            {{ mailing.failed }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="4">
+                            У вас пока нет попыток рассылки.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
