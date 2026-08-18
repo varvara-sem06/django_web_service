@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{ object.full_name }}</h2>
+
+<p>Email: {{ object.email }}</p>
+
+<p>{{ object.comment }}</p>
+
+<a href="{% url 'mailings:list' %}">
+Назад
+</a>
+
+{% endblock %}

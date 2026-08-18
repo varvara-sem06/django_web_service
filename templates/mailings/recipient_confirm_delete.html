@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Удаление</h2>
+
+<p>
+
+Удалить получателя?
+
+</p>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <button type="submit">
+
+        Да
+
+    </button>
+
+</form>
+
+{% endblock %}

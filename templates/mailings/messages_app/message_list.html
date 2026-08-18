@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Сообщения</h2>
+
+<a href="{% url 'messages:create' %}">
+Создать сообщение
+</a>
+
+<hr>
+
+{% for message in messages %}
+
+<p>
+
+<strong>{{ message.subject }}</strong>
+
+|
+
+<a href="{% url 'messages:detail' message.pk %}">
+Открыть
+</a>
+
+|
+
+<a href="{% url 'messages:update' message.pk %}">
+Редактировать
+</a>
+
+|
+
+<a href="{% url 'messages:delete' message.pk %}">
+Удалить
+</a>
+
+</p>
+
+{% empty %}
+
+<p>Сообщений нет.</p>
+
+{% endfor %}
+
+{% endblock %}
